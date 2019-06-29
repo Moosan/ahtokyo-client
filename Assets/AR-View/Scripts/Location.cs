@@ -22,7 +22,7 @@ namespace Scripts
         public LocationService locationService = new LocationService();
         public const float EquatorialRadius = 6378137; //赤道半径
         public delegate void OnChangeLocationEventHandler(LocationPoint locationPoint);
-        public OnChangeLocationEventHandler OnChange;
+        public OnChangeLocationEventHandler OnChange = _ => {};
 
         void Start()
         {
