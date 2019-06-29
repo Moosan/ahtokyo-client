@@ -1,50 +1,51 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UserData;
 public class ConnectManager : MonoBehaviour
 {
     public HttpsManager HttpsManager;
-    
+    private string id;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(CheckNetworkState());
+        StartCoroutine(NetworkingTransition());
     }
-
-    // Update is called once per frame
-    void Update()
+    IEnumerator NetworkingTransition()
     {
-        
-    }
-    IEnumerator CheckNetworkState()
-    {
+        id = PlayerPrefs.GetString("ID");
+        if(id == null)
+        {
+            if (Application.internetReachability != NetworkReachability.NotReachable)
+            {
+                HttpsManager.OnCheck();
+                while (true)
+                {
+                    if(HttpsManager.State == HttpsManagerState.Success)
+                    {
+                        id = HttpsManager.GetText;
+                        PlayerPrefs.SetString("ID",id);
+                        PlayerPrefs.Save();
+                        break;
+                    }
+                }
+            }
+        }
         while (true)
         {
-
             // ネットワークの状態を確認する
             if (Application.internetReachability != NetworkReachability.NotReachable)
             {
                 // ネットワークに接続されている状態
-                Debug.Log("NetWorkつながるしUploadしよ～");
-                HttpsManager.OnConnect();
+                HttpsManager.OnUpdate();
 
                 while (true)
                 {
                     yield return null;
                     if (HttpsManager.State == HttpsManagerState.Success)
                     {
-                        Debug.Log("NetWorkとの通信うまくいったね！");
-                        yield return new WaitForSeconds(1f);
+                        yield return new WaitForSeconds(60f);
                         break;
                     }
                 }
-            }
-            else
-            {
-                // ネットワークに接続されていない状態
-                Debug.Log("NetWorkつながらんやんけ");
-                Debug.Log("BlueToothでなんかしよ～");
-                yield return new WaitForSeconds(3f);
             }
         }
 

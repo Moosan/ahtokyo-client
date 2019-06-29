@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 
@@ -6,40 +7,56 @@ public class HttpsManager:MonoBehaviour
 {
     public HttpsManagerState State = HttpsManagerState.Init;
     private string url = "https://ahtokyo2019.mybluemix.net/survivors";
+    private string idUrl = "https://ahtokyo2019.mybluemix.net/generate";
+
     public string GetText = "";
-    public void OnConnect()
+
+    private string UploadData;
+
+    
+
+    public void OnCheck()
     {
-        GetText = "";
         State = HttpsManagerState.Running;
-        StartCoroutine(OnSend(url));
+        StartCoroutine(CheckID());
     }
 
-    IEnumerator Upload()
+    IEnumerator CheckID()
     {
-        return null;
-    }
-
-    IEnumerator OnSend(string url)
-    {
-        //URLをGETで用意
-        UnityWebRequest webRequest = UnityWebRequest.Get(url);
-        //URLに接続して結果が戻ってくるまで待機
+        UnityWebRequest webRequest = UnityWebRequest.Get(idUrl);
         yield return webRequest.SendWebRequest();
 
         //エラーが出ていないかチェック
         if (webRequest.isNetworkError)
         {
             State = HttpsManagerState.Error;
-            //通信失敗
-            Debug.Log(webRequest.error);
         }
         else
         {
             State = HttpsManagerState.Success;
             //通信成功
             GetText = webRequest.downloadHandler.text;
-            Debug.Log(GetText);
+        }
+    }
+    public void OnUpdate()
+    {
+        GetText = "";
+        State = HttpsManagerState.Running;
+        StartCoroutine(OnSend(url, UploadData));
+    }
 
+    IEnumerator OnSend(string url,string data)
+    {
+        UnityWebRequest webRequest = UnityWebRequest.Post(url,data);
+        yield return webRequest.SendWebRequest();
+        if (webRequest.isNetworkError)
+        {
+            State = HttpsManagerState.Error;
+        }
+        else
+        {
+            State = HttpsManagerState.Success;
+            GetText = webRequest.downloadHandler.text;
         }
     }
 }
