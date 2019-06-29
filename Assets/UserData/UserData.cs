@@ -1,7 +1,12 @@
-﻿public class UserData
+﻿using System;
+namespace UserData
 {
-    private string Id;
-    private float UnixTime;
-    private float Latitude;
-    private float Longitude;
+    [Serializable]
+    public class UserData
+    {
+        public string id;
+        public DateTime time;
+        public float Lat;
+        public float Lon;
+    }
 }
