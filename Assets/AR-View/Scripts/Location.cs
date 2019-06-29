@@ -30,6 +30,7 @@ namespace Scripts
             LocationPoint TUS = new LocationPoint(35.69978f, 139.741471f);
             LocationPoint KIRARITOGINZA = new LocationPoint(35.674214f, 139.768524f);
             Debug.Log(Distance(TUS, KIRARITOGINZA));
+            Debug.Log(Direction(TUS, KIRARITOGINZA));
         }
 
         private LocationPoint AcquisitionLocate()
@@ -47,7 +48,6 @@ namespace Scripts
 
         // 与えられた二点間の距離をmで返す
         public static float Distance(LocationPoint a, LocationPoint b)
-
         {
             float aLat = a.latitude * Mathf.Deg2Rad;
             float aLong = a.longitude * Mathf.Deg2Rad;
@@ -60,6 +60,23 @@ namespace Scripts
                        Mathf.Pow(Mathf.Sin(halfLatitudeDiff), 2) + Mathf.Cos(aLat) * Mathf.Cos(bLat) *
                        Mathf.Pow(Mathf.Sin(halfLongitudeDiff), 2)
                    ));
+        }
+
+        // 与えられた点aからどちらの方角にもう一つの点bがあるどうか
+        // ラジアンで返す
+        public static float Direction(LocationPoint a, LocationPoint b)
+        {
+            float aLat = a.latitude * Mathf.Deg2Rad;
+            float aLong = a.longitude * Mathf.Deg2Rad;
+            float bLat = b.latitude * Mathf.Deg2Rad;
+            float bLong = b.longitude * Mathf.Deg2Rad;
+            float longDiff = bLong - aLong;
+
+            float y = Mathf.Sin(longDiff);
+            float x = Mathf.Cos(aLat) * Mathf.Tan(bLat) - Mathf.Sin(aLat) * Mathf.Cos(longDiff);
+
+            float direction = Mathf.Atan2(y, x);
+            return direction < 0 ? direction + 2 * Mathf.PI : direction;
         }
     }
 }
