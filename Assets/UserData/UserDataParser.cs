@@ -7,11 +7,13 @@ namespace UserData
     {
         public static string SerializeUserDataToJson(UserData userData)
         {
-            var dict = new Dictionary<string, object>();
-            dict.Add("id", userData.id);
-            dict.Add("time", TimeUtil.TimeUtil.GetUnixTime(userData.time));
-            dict.Add("Lat", (userData.Lat).ToString("F6"));
-            dict.Add("Lon", (userData.Lat).ToString("F6"));
+            var dict = new Dictionary<string, object>
+            {
+                { "id", userData.id },
+                { "time", TimeUtil.TimeUtil.GetUnixTime(userData.time) },
+                { "Lat", (userData.Lat).ToString("F6") },
+                { "Lon", (userData.Lat).ToString("F6") }
+            };
             return Json.Serialize(dict);
         }
         public static UserData DeserializeJsonToUserData(string text)
