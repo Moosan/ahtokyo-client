@@ -18,24 +18,35 @@ public class ConnectManager : MonoBehaviour
     }
     IEnumerator CheckNetworkState()
     {
-        // ネットワークの状態を確認する
-        if (Application.internetReachability != NetworkReachability.NotReachable)
+        while (true)
         {
-            // ネットワークに接続されている状態
-            HttpsManager.OnConnect();
-            while (true)
+
+            // ネットワークの状態を確認する
+            if (Application.internetReachability != NetworkReachability.NotReachable)
             {
-                yield return null;
-                if (HttpsManager.State == HttpsManagerState.Success)
+                // ネットワークに接続されている状態
+                Debug.Log("NetWorkつながるしUploadしよ～");
+                HttpsManager.OnConnect();
+
+                while (true)
                 {
-                    Debug.Log(UserDataArrayParser.DeserializeJsonToUserDataArray(HttpsManager.GetText));
-                    break;
+                    yield return null;
+                    if (HttpsManager.State == HttpsManagerState.Success)
+                    {
+                        Debug.Log("NetWorkとの通信うまくいったね！");
+                        yield return new WaitForSeconds(1f);
+                        break;
+                    }
                 }
             }
+            else
+            {
+                // ネットワークに接続されていない状態
+                Debug.Log("NetWorkつながらんやんけ");
+                Debug.Log("BlueToothでなんかしよ～");
+                yield return new WaitForSeconds(3f);
+            }
         }
-        else
-        {
-            // ネットワークに接続されていない状態
-        }
+
     }
 }

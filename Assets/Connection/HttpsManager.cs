@@ -13,6 +13,12 @@ public class HttpsManager:MonoBehaviour
         State = HttpsManagerState.Running;
         StartCoroutine(OnSend(url));
     }
+
+    IEnumerator Upload()
+    {
+        return null;
+    }
+
     IEnumerator OnSend(string url)
     {
         //URLをGETで用意
