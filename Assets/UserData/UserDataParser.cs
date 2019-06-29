@@ -16,8 +16,8 @@ namespace UserData
             {
                 { "id", userData.id },
                 { "time", TimeUtil.TimeUtil.GetUnixTime(userData.time) },
-                { "Lat", (userData.Lat).ToString("F6") },
-                { "Lon", (userData.Lat).ToString("F6") }
+                { "Lat", userData.Lat?.ToString("F6") ?? "null"},
+                { "Lon", userData.Lat?.ToString("F6") ?? "null"}
             };
         }
         public static UserData DeserializeJsonToUserData(string text)
@@ -26,13 +26,25 @@ namespace UserData
         }
         public static UserData DeserializeJsonToDictionary(Dictionary<string,object> dict)
         {
-            return new UserData()
+            if (dict["Lat"].ToString() == "null" || dict["Lon"].ToString() == "null")
             {
-                id = (string)dict["id"],
-                time = TimeUtil.TimeUtil.GetDateTime((long)dict["time"]),
-                Lat = System.Convert.ToSingle(dict["Lat"]),
-                Lon = System.Convert.ToSingle(dict["Lon"])
-            };
+                return new UserData() {
+                    id = (string)dict["id"],
+                    time = TimeUtil.TimeUtil.GetDateTime((long)dict["time"]),
+                    Lat = null,
+                    Lon = null
+                };
+            }
+            else
+            {
+                return new UserData()
+                {
+                    id = (string)dict["id"],
+                    time = TimeUtil.TimeUtil.GetDateTime((long)dict["time"]),
+                    Lat = System.Convert.ToSingle(dict["Lat"]),
+                    Lon = System.Convert.ToSingle(dict["Lon"])
+                };
+            }
         }
     }
     public static class UserDataArrayParser
