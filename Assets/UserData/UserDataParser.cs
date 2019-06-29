@@ -26,7 +26,7 @@ namespace UserData
         }
         public static UserData DeserializeJsonToDictionary(Dictionary<string,object> dict)
         {
-            if (dict["Lat"].ToString() == "null" || dict["Lon"].ToString() == "null")
+            if (dict["Lat"] == null || dict["Lon"] == null)
             {
                 return new UserData() {
                     id = (string)dict["id"],
