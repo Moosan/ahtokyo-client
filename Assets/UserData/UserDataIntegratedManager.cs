@@ -18,14 +18,14 @@ namespace UserData {
             IntegratedData = PlayerPrefs.GetString("Intg");
             OwnUserDataManager.OnUpdate += userData =>
             {
-                Update(userData, OtherUserDatasManager.OtherUserDatas);
+                UpdateData(userData, OtherUserDatasManager.OtherUserDatas);
             };
             OtherUserDatasManager.OnUpdate += userDataArray => {
-                Update(OwnUserDataManager.UserData,userDataArray);
+                UpdateData(OwnUserDataManager.UserData,userDataArray);
             };
         }
 
-        private void Update(UserData userData,UserData[] userDataArray)
+        private void UpdateData(UserData userData,UserData[] userDataArray)
         {
             var array = new UserData[userDataArray.Length + 1];
             for(int i = 0;i < userDataArray.Length; i++)

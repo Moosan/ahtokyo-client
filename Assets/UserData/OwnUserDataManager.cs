@@ -24,10 +24,11 @@ namespace UserData
         {
             UserData.id = id;
         }
-        private void OnUserLocationChange(LocationPoint locationPoint)
+        private void OnUserLocationChange(LocationPoint locationPoint,double timeStamp)
         {
             UserData.Lat = locationPoint.latitude;
             UserData.Lon = locationPoint.longitude;
+            UserData.time = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(timeStamp).ToLocalTime();
             OnUpdate(UserData);
         }
     }
