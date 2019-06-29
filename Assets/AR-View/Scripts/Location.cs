@@ -6,10 +6,10 @@ namespace Scripts
     // 緯度, 経度を保存するデータクラス
     public class LocationPoint
     {
-        public float latitude; //緯度
-        public float longitude; //経度
+        public float? latitude; //緯度
+        public float? longitude; //経度
 
-        public LocationPoint(float latitude, float longitude)
+        public LocationPoint(float? latitude, float? longitude)
         {
             this.latitude = latitude;
             this.longitude = longitude;
@@ -62,7 +62,15 @@ namespace Scripts
                     if(locationService.status == LocationServiceStatus.Running)
                     {
                         LocationInfo locationInfo = locationService.lastData; // lastなのでなので本当はstartして待たなければいけない
-                        LocationPoint currentLocation = new LocationPoint(locationInfo.latitude, locationInfo.longitude);
+                        float? lat = null;
+                        float? lon = null;
+                        if (locationInfo.horizontalAccuracy < 200)
+                        {
+                            lat = locationInfo.latitude;
+                            lon = locationInfo.longitude;
+                        }
+                        LocationPoint currentLocation = new LocationPoint(lat,lon);
+                        
                         OnChange(currentLocation);
                         locationService.Stop();
                         yield return new WaitForSeconds(60f);
@@ -75,10 +83,10 @@ namespace Scripts
         // 与えられた二点間の距離をmで返す
         public static float Distance(LocationPoint a, LocationPoint b)
         {
-            float aLat = a.latitude * Mathf.Deg2Rad;
-            float aLong = a.longitude * Mathf.Deg2Rad;
-            float bLat = b.latitude * Mathf.Deg2Rad;
-            float bLong = b.longitude * Mathf.Deg2Rad;
+            float aLat = a?.latitude ?? 0 * Mathf.Deg2Rad;
+            float aLong = a?.longitude ?? 0 * Mathf.Deg2Rad;
+            float bLat = b?.latitude ?? 0 * Mathf.Deg2Rad;
+            float bLong = b?.longitude ?? 0 * Mathf.Deg2Rad;
             float halfLatitudeDiff = (aLat - bLat) / 2;
             float halfLongitudeDiff = (aLong - bLong) / 2;
 
@@ -92,10 +100,10 @@ namespace Scripts
         // ラジアンで返す
         public static float Direction(LocationPoint a, LocationPoint b)
         {
-            float aLat = a.latitude * Mathf.Deg2Rad;
-            float aLong = a.longitude * Mathf.Deg2Rad;
-            float bLat = b.latitude * Mathf.Deg2Rad;
-            float bLong = b.longitude * Mathf.Deg2Rad;
+            float aLat = a?.latitude ?? 0* Mathf.Deg2Rad;
+            float aLong = a?.longitude ?? 0* Mathf.Deg2Rad;
+            float bLat = b?.latitude ?? 0* Mathf.Deg2Rad;
+            float bLong = b?.longitude ?? 0 * Mathf.Deg2Rad;
             float longDiff = bLong - aLong;
 
             float y = Mathf.Sin(longDiff);
