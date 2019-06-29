@@ -35,11 +35,20 @@ namespace Scripts
 
         private LocationPoint AcquisitionLocate()
         {
+            for (int i = 0; i < 20; ++i)
+            {
+                if (locationService.isEnabledByUser)
+                {
+                    break;
+                }
+
+                Input.location.Start(); // 許可を求める
+            }
+
             if (locationService.isEnabledByUser)
             {
                 Debug.Log("位置情報が許可されていません");
             }
-            // TODO: ここで許可を求める
 
             LocationInfo locationInfo = locationService.lastData; // lastなのでなので本当はstartして待たなければいけない
             LocationPoint currentLocation = new LocationPoint(locationInfo.latitude, locationInfo.longitude);
