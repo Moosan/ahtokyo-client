@@ -1,10 +1,10 @@
 using UnityEngine;
-using UnityEngine.Serialization;
+using System.Collections;
 
 namespace Scripts
 {
     // 緯度, 経度を保存するデータクラス
-    public class LocationPoint : MonoBehaviour
+    public class LocationPoint
     {
         public float latitude; //緯度
         public float longitude; //経度
@@ -21,25 +21,29 @@ namespace Scripts
     {
         public LocationService locationService = new LocationService();
         public const float EquatorialRadius = 6378137; //赤道半径
-
+        public delegate void OnChangeLocationEventHandler(LocationPoint locationPoint);
+        public OnChangeLocationEventHandler OnChange;
 
         void Start()
         {
-            Debug.Log(AcquisitionLocate());
+            StartCoroutine("AcquisitionLocate");
 
+            /*
             LocationPoint TUS = new LocationPoint(35.69978f, 139.741471f);
             LocationPoint KIRARITOGINZA = new LocationPoint(35.674214f, 139.768524f);
             Debug.Log(Distance(TUS, KIRARITOGINZA));
             Debug.Log(Direction(TUS, KIRARITOGINZA));
+            */
         }
 
-        private LocationPoint AcquisitionLocate()
+        private IEnumerable AcquisitionLocate()
         {
+
             for (int i = 0; i < 20; ++i)
             {
                 if (locationService.isEnabledByUser)
                 {
-                    break;
+                    yield return false;
                 }
 
                 Input.location.Start(); // 許可を求める
@@ -48,11 +52,24 @@ namespace Scripts
             if (locationService.isEnabledByUser)
             {
                 Debug.Log("位置情報が許可されていません");
+                yield return false;
             }
-
-            LocationInfo locationInfo = locationService.lastData; // lastなのでなので本当はstartして待たなければいけない
-            LocationPoint currentLocation = new LocationPoint(locationInfo.latitude, locationInfo.longitude);
-            return currentLocation;
+            else
+            {
+                locationService.Start();
+                while (true)
+                {
+                    if(locationService.status == LocationServiceStatus.Running)
+                    {
+                        LocationInfo locationInfo = locationService.lastData; // lastなのでなので本当はstartして待たなければいけない
+                        LocationPoint currentLocation = new LocationPoint(locationInfo.latitude, locationInfo.longitude);
+                        OnChange(currentLocation);
+                        locationService.Stop();
+                        yield return new WaitForSeconds(60f);
+                        locationService.Start();
+                    }
+                }
+            }
         }
 
         // 与えられた二点間の距離をmで返す
