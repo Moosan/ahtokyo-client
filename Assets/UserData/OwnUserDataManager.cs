@@ -13,13 +13,11 @@ namespace UserData
 
         private void Start()
         {
-            UserData = new UserData() {
-                id = "toriaezunoatai",
-                time = DateTime.Now,
-                Lat = 0.000000f,
-                Lon = 0.000000f
-            };
             Location.OnChange += OnUserLocationChange;
+        }
+        public void SetID(string id)
+        {
+
         }
         private void OnUserLocationChange(LocationPoint locationPoint)
         {
