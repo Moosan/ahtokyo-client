@@ -17,7 +17,7 @@ namespace UserData
                 { "id", userData.id },
                 { "time", TimeUtil.TimeUtil.GetUnixTime(userData.time) },
                 { "Lat", userData.Lat?.ToString("F6") ?? "null"},
-                { "Lon", userData.Lat?.ToString("F6") ?? "null"}
+                { "Lon", userData.Lot?.ToString("F6") ?? "null"}
             };
         }
         public static UserData DeserializeJsonToUserData(string text)
