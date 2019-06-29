@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using Scripts;
 namespace UserData
 {
     public class OwnUserDataManager : MonoBehaviour
@@ -16,9 +17,11 @@ namespace UserData
                 Lon = 0.000000f
             };
         }
-        private void OnUserLocationChange()
+        private void OnUserLocationChange(LocationPoint locationPoint)
         {
-
+            UserData.Lat = locationPoint.latitude;
+            UserData.Lon = locationPoint.longitude;
+            OnUpdate(UserData);
         }
     }
 }
