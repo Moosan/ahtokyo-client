@@ -8,6 +8,9 @@ namespace UserData
         public delegate void UserDataUpdateHandler(UserData userData);
         public UserDataUpdateHandler OnUpdate;
         public UserData UserData;
+
+        public Location Location;
+
         private void Start()
         {
             UserData = new UserData() {
@@ -16,6 +19,7 @@ namespace UserData
                 Lat = 0.000000f,
                 Lon = 0.000000f
             };
+            Location.OnChange += OnUserLocationChange;
         }
         private void OnUserLocationChange(LocationPoint locationPoint)
         {
