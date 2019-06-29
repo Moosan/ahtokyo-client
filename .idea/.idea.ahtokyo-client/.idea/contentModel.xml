@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/Library/Caches/Rider2019.1/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.1/resharper-host/local/Transient/ReSharperHost/v191/SolutionCaches/_ahtokyo-client.-2022290282.00" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p="ahtokyo-client.sln" t="IncludeFlat" />
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="AR-View" t="Include">
+          <e p="Scripts" t="Include">
+            <e p="TestScript.cs" t="Include" />
+          </e>
+          <e p="UnityARKitPlugin" t="Include">
+            <e p="ARKitRemote" t="Include">
+              <e p="ARKitFaceTrackingRemoteConnection.cs" t="Include" />
+              <e p="ARKITREMOTE.txt" t="Include" />
+              <e p="ARKitRemoteConnection.cs" t="Include" />
+              <e p="CompressionHelper.cs" t="Include" />
+              <e p="ConnectionMessageIds.cs" t="Include" />
+              <e p="ConnectToEditor.cs" t="Include" />
+              <e p="EditorARFaceAnchor.cs" t="Include" />
+              <e p="EditorARPlaneAnchor.cs" t="Include" />
+              <e p="EditorHitTest.cs" t="Include" />
+              <e p="ObjectSerializationExtension.cs" t="Include" />
+              <e p="SerializableObjects.cs" t="Include" />
+              <e p="UnityRemoteVideo.cs" t="Include" />
+            </e>
+            <e p="Examples" t="Include">
+              <e p="AddRemoveAnchorExample" t="Include">
+                <e p="UnityARUserAnchorExample.cs" t="Include" />
+              </e>
+              <e p="ARKit1.5" t="Include">
+                <e p="UnityARImageAnchor" t="Include">
+                  <e p="GenerateImageAnchor.cs" t="Include" />
+                </e>
+                <e p="UnityARKitRelocalize" t="Include">
+                  <e p="RelocalizationControl.cs" t="Include" />
+                </e>
+                <e p="UnityARSetWorldOrigin" t="Include">
+                  <e p="SetWorldOriginControl.cs" t="Include" />
+                </e>
+                <e p="UnityARVideoFormats" t="Include">
+                  <e p="VideoFormatButton.cs" t="Include" />
+                  <e p="VideoFormatsExample.cs" t="Include" />
+                </e>
+              </e>
+              <e p="ARKit2.0" t="Include">
+                <e p="UnityAREnvironmentTexture" t="Include">
+                  <e p="GenerateEnvironmentProbeAnchors.cs" t="Include" />
+                  <e p="HitCreateEnvironmentProbe.cs" t="Include" />
+                  <e p="ReflectionProbeGameObject.cs" t="Include" />
+                </e>
+                <e p="UnityARObjectAnchor" t="Include">
+                  <e p="GenerateObjectAnchor.cs" t="Include" />
+                </e>
+                <e p="UnityARWorldMap" t="Include">
+                  <e p="UpdateWorldMappingStatus.cs" t="Include" />
+                  <e p="WorldMapManager.cs" t="Include" />
+                </e>
+                <e p="UnityObjectScanner" t="Include">
+                  <e p="DetectedObjectManager.cs" t="Include" />
+                  <e p="ObjectScanManager.cs" t="Include" />
+                  <e p="ObjectScanSessionManager.cs" t="Include" />
+                  <e p="ObjectText.cs" t="Include" />
+                  <e p="PickBoundingBox.cs" t="Include" />
+                  <e p="PrintBounds.cs" t="Include" />
+                </e>
+                <e p="UnityTongueAndEyes" t="Include">
+                  <e p="TongueDetector.cs" t="Include" />
+                  <e p="UnityEyeManager.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Common" t="Include">
+                <e p="Shaders" t="Include">
+                  <e p="InstancedSurfaceShader.shader" t="Include" />
+                  <e p="MobileARShadow.shader" t="Include" />
+                  <e p="MobileOcclusion.shader" t="Include" />
+                </e>
+              </e>
+              <e p="FaceTracking" t="Include">
+                <e p="ARCameraTracker.cs" t="Include" />
+                <e p="BlendshapeDriver.cs" t="Include" />
+                <e p="BlendshapePrinter.cs" t="Include" />
+                <e p="UnityARFaceAnchorManager.cs" t="Include" />
+                <e p="UnityARFaceMeshManager.cs" t="Include" />
+              </e>
+              <e p="FocusSquare" t="Include">
+                <e p="FocusSquare.cs" t="Include" />
+              </e>
+              <e p="UnityARBallz" t="Include">
+                <e p="BallMaker.cs" t="Include" />
+                <e p="BallMover.cs" t="Include" />
+                <e p="Ballz.cs" t="Include" />
+                <e p="ModeSwitcher.cs" t="Include" />
+              </e>
+              <e p="UnityParticlePainter" t="Include">
+                <e p="HSVPicker" t="Include">
+                  <e p="Editor" t="Include">
+                    <e p="BoxSliderEditor.cs" t="Include" />
+                  </e>
+                  <e p="Enums" t="Include">
+                    <e p="ColorValues.cs" t="Include" />
+                  </e>
+                  <e p="Events" t="Include">
+                    <e p="ColorChangedEvent.cs" t="Include" />
+                    <e p="HSVChangedEvent.cs" t="Include" />
+                  </e>
+                  <e p="Other" t="Include">
+                    <e p="ColorPickerTester.cs" t="Include" />
+                    <e p="TiltWindow.cs" t="Include" />
+                  </e>
+                  <e p="UI" t="Include">
+                    <e p="ColorImage.cs" t="Include" />
+                    <e p="ColorLabel.cs" t="Include" />
+                    <e p="ColorPicker.cs" t="Include" />
+                    <e p="ColorPresets.cs" t="Include" />
+                    <e p="ColorSlider.cs" t="Include" />
+                    <e p="ColorSliderImage.cs" t="Include" />
+                    <e p="HexColorField.cs" t="Include" />
+                    <e p="SVBoxSlider.cs" t="Include" />
+                  </e>
+                  <e p="UtilityScripts" t="Include">
+                    <e p="BoxSlider.cs" t="Include" />
+                    <e p="HSVUtil.cs" t="Include" />
+                  </e>
+                </e>
+                <e p="ParticlePainter.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Plugins" t="Include">
+              <e p="iOS" t="Include">
+                <e p="UnityARKit" t="Include">
+                  <e p="ARReferenceImage.cs" t="Include" />
+                  <e p="ARReferenceImagesSet.cs" t="Include" />
+                  <e p="ARReferenceObjectAsset.cs" t="Include" />
+                  <e p="ARReferenceObjectsSetAsset.cs" t="Include" />
+                  <e p="ARResourcesJSON.cs" t="Include" />
+                  <e p="Editor" t="Include">
+                    <e p="UnityARBuildPostprocessor.cs" t="Include" />
+                  </e>
+                  <e p="Helpers" t="Include">
+                    <e p="AR3DOFCameraManager.cs" t="Include" />
+                    <e p="ARKitPlaneMeshRender.cs" t="Include" />
+                    <e p="ARPlaneAnchorGameObject.cs" t="Include" />
+                    <e p="DontDestroyOnLoad.cs" t="Include" />
+                    <e p="LinkedListDictionary.cs" t="Include" />
+                    <e p="PointCloudParticleExample.cs" t="Include" />
+                    <e p="UnityARAmbient.cs" t="Include" />
+                    <e p="UnityARAnchorManager.cs" t="Include" />
+                    <e p="UnityARCameraManager.cs" t="Include" />
+                    <e p="UnityARCameraNearFar.cs" t="Include" />
+                    <e p="UnityARGeneratePlane.cs" t="Include" />
+                    <e p="UnityARHitTestExample.cs" t="Include" />
+                    <e p="UnityARKitControl.cs" t="Include" />
+                    <e p="UnityARKitLightManager.cs" t="Include" />
+                    <e p="UnityARMatrixOps.cs" t="Include" />
+                    <e p="UnityARUserAnchorComponent.cs" t="Include" />
+                    <e p="UnityARUtility.cs" t="Include" />
+                    <e p="UnityARVideo.cs" t="Include" />
+                    <e p="UnityPointCloudExample.cs" t="Include" />
+                  </e>
+                  <e p="NativeInterface" t="Include">
+                    <e p="ARAnchor.cs" t="Include" />
+                    <e p="ARCamera.cs" t="Include" />
+                    <e p="AREnvironmentProbeAnchor.cs" t="Include" />
+                    <e p="ARErrorCode.cs" t="Include" />
+                    <e p="ARFaceAnchor.cs" t="Include" />
+                    <e p="ARFrame.cs" t="Include" />
+                    <e p="ARHitTestResult.cs" t="Include" />
+                    <e p="ARHitTestResultType.cs" t="Include" />
+                    <e p="ARImageAnchor.cs" t="Include" />
+                    <e p="ARLightEstimate.cs" t="Include" />
+                    <e p="ARObjectAnchor.cs" t="Include" />
+                    <e p="ARPlaneAnchor.cs" t="Include" />
+                    <e p="ARPlaneAnchorAlignment.cs" t="Include" />
+                    <e p="ARPoint.cs" t="Include" />
+                    <e p="ARPointCloud.cs" t="Include" />
+                    <e p="ARRect.cs" t="Include" />
+                    <e p="ARReferenceObject.cs" t="Include" />
+                    <e p="ARSize.cs" t="Include" />
+                    <e p="ARTextureHandles.cs" t="Include" />
+                    <e p="ARTrackingQuality.cs" t="Include" />
+                    <e p="ARTrackingState.cs" t="Include" />
+                    <e p="ARTrackingStateReason.cs" t="Include" />
+                    <e p="ARUserAnchor.cs" t="Include" />
+                    <e p="ARVideoFormat.cs" t="Include" />
+                    <e p="ARWorldMap.cs" t="Include" />
+                    <e p="UnityARSessionNativeInterface.cs" t="Include" />
+                  </e>
+                  <e p="Shaders" t="Include">
+                    <e p="YUVShader.shader" t="Include" />
+                    <e p="YUVShaderLinear.shader" t="Include" />
+                  </e>
+                </e>
+              </e>
+            </e>
+            <e p="UnityARKitPluginSettings.cs" t="Include" />
+          </e>
+        </e>
+        <e p="BLE" t="Include">
+          <e p="Editor" t="Include">
+            <e p="BluetoothPostProcessBuild.cs" t="Include" />
+          </e>
+          <e p="Example" t="Include">
+            <e p="MouseDragRotate.cs" t="Include" />
+            <e p="NetworkTestScript.cs" t="Include" />
+          </e>
+          <e p="Plugins" t="Include">
+            <e p="Android" t="Include">
+              <e p="AndroidManifest.xml" t="Include" />
+            </e>
+            <e p="BluetoothDeviceScript.cs" t="Include" />
+            <e p="BluetoothHardwareInterface.cs" t="Include" />
+            <e p="Networking.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="Temp/bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
