@@ -11,13 +11,18 @@ namespace UserData
 
         public Location Location;
 
+        private void Awake()
+        {
+            UserData = new UserData();
+        }
+
         private void Start()
         {
             Location.OnChange += OnUserLocationChange;
         }
         public void SetID(string id)
         {
-
+            UserData.id = id;
         }
         private void OnUserLocationChange(LocationPoint locationPoint)
         {

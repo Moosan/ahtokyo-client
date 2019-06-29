@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UserData;
 public class ConnectManager : MonoBehaviour
 {
     public HttpsManager HttpsManager;
+    public OwnUserDataManager OwnUserDataManager;
     private string id;
     // Start is called before the first frame update
     void Start()
@@ -29,6 +31,7 @@ public class ConnectManager : MonoBehaviour
                 }
             }
         }
+        OwnUserDataManager.SetID(id);
         while (true)
         {
             // ネットワークの状態を確認する

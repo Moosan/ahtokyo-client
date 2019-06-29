@@ -4,7 +4,9 @@ using UnityEngine;
 namespace UserData {
     public class UserDataIntegratedManager : MonoBehaviour
     {
+        [SerializeField]
         private OwnUserDataManager OwnUserDataManager;
+        [SerializeField]
         private OtherUserDatasManager OtherUserDatasManager;
         private string IntegratedData;
 
