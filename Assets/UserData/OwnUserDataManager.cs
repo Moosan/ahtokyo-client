@@ -6,7 +6,7 @@ namespace UserData
     public class OwnUserDataManager : MonoBehaviour
     {
         public delegate void UserDataUpdateHandler(UserData userData);
-        public UserDataUpdateHandler OnUpdate;
+        public UserDataUpdateHandler OnUpdate = _=> { };
         public UserData UserData;
 
         public Location Location;
