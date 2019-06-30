@@ -6,7 +6,7 @@ namespace UserData
     public class OtherUserDatasManager : MonoBehaviour
     {
         public delegate void OtherUserDatasUpdateHandler(UserData[] userDataArray);
-        public OtherUserDatasUpdateHandler OnUpdate;
+        public OtherUserDatasUpdateHandler OnUpdate = _=> { };
         public UserData[] OtherUserDatas;
 
         private void Start()
