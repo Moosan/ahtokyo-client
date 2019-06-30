@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using Shatalmic;
 using System;
+using System.Data;
+using UserData;
 
 public class NetworkTestScript : MonoBehaviour
 {
@@ -13,11 +15,11 @@ public class NetworkTestScript : MonoBehaviour
 	private bool writeDeviceBytes = false;
 	private byte[] bytesToWrite = null;
 	private int deviceToWriteIndex = 0;
-	private bool sendingCubeRotation = false;
-	private Quaternion newCubeRotation = Quaternion.identity;
+	private bool sendingUserData = false;
+	private UserData.UserData[] newUserDatas = {};
 	private Networking.NetworkDevice deviceToSkip = null;
 
-	public GameObject Cube;
+	public Text LogText;
 	public Text TextStatus;
 
 	// because the networking library is asynchronous due to the nature of
@@ -41,7 +43,7 @@ public class NetworkTestScript : MonoBehaviour
 					if (!writeDeviceBytes)
 					{
 						bytesToWrite = null;
-						sendingCubeRotation = false;
+						sendingUserData = false;
 					}
 				};
 
@@ -57,25 +59,30 @@ public class NetworkTestScript : MonoBehaviour
 			}
 		}
 
-		if (newCubeRotation != Quaternion.identity)
+		if (newUserDatas.Length != 0)
 		{
-			if (Cube != null)
-				Cube.transform.rotation = newCubeRotation;
-			newCubeRotation = Quaternion.identity;
+//			if (Cube != null)
+//				Cube.transform.rotation = newUserDatas;
+			LogText.text = UserDataParser.SerializeUserDataToJson(newUserDatas[0]);
+			Array.Resize(ref newUserDatas, 0);
 		}
+
+		UserData.UserData userData = new UserData.UserData();
+		userData.id = "test";
+		userData.time = DateTime.Now;
+		userData.Lat = 200;
+		userData.Lon = -10;
+		
+		SendUserDatas (new[] {userData});
 	}
 
-	protected void SendCubeRotation (Quaternion rotation, Networking.NetworkDevice device = null)
+	protected void SendUserDatas (UserData.UserData[] userDatas, Networking.NetworkDevice device = null)
 	{
-		if (!sendingCubeRotation)
+		if (!sendingUserData)
 		{
-			sendingCubeRotation = true;
+			sendingUserData = true;
 
-			var bytes = new byte[16];
-			Array.Copy (BitConverter.GetBytes (rotation.x), 0, bytes, 0, 4);
-			Array.Copy (BitConverter.GetBytes (rotation.y), 0, bytes, 4, 4);
-			Array.Copy (BitConverter.GetBytes (rotation.z), 0, bytes, 8, 4);
-			Array.Copy (BitConverter.GetBytes (rotation.w), 0, bytes, 12, 4);
+			byte[] bytes = System.Text.Encoding.ASCII.GetBytes(UserData.UserDataArrayParser.SerializeUserDataArrayToJson(userDatas));
 
 			if (isServer)
 			{
@@ -88,13 +95,13 @@ public class NetworkTestScript : MonoBehaviour
 							if (deviceToSkip == null)
 							{
 								networking.WriteDevice (connectedDeviceList[0], bytes, () => {
-									sendingCubeRotation = false;
+									sendingUserData = false;
 								});
 							}
 							else
 							{
 								deviceToSkip = null;
-								sendingCubeRotation = false;
+								sendingUserData = false;
 							}
 						}
 						else
@@ -110,24 +117,25 @@ public class NetworkTestScript : MonoBehaviour
 				else
 				{
 					networking.WriteDevice (device, bytes, () => {
-						sendingCubeRotation = false;
+						sendingUserData = false;
 					});
 				}
 			}
 			else
 			{
 				networking.SendFromClient (bytes);
-				sendingCubeRotation = false;
+				sendingUserData = false;
 			}
 		}
 	}
 
-	protected void ParseCubePosition(byte[] bytes)
+	protected void ParseUserData(byte[] bytes)
 	{
-		newCubeRotation = new Quaternion (BitConverter.ToSingle (bytes, 0), BitConverter.ToSingle (bytes, 4), BitConverter.ToSingle (bytes, 8), BitConverter.ToSingle (bytes, 12));
+		string text = System.Text.Encoding.ASCII.GetString(bytes);
+		newUserDatas = UserData.UserDataArrayParser.DeserializeJsonToUserDataArray(text);
 
 		if (isServer)
-			SendCubeRotation (newCubeRotation);
+			SendUserDatas (newUserDatas);
 	}
 
 	public Text NetworkName;
@@ -151,14 +159,14 @@ public class NetworkTestScript : MonoBehaviour
 
 				deviceToSkip = null;
 				deviceToWriteIndex = 0;
-				sendingCubeRotation = false;
+				sendingUserData = false;
 				isServer = true;
 				ButtonStartServer.SetActive (false);
 				ButtonStartClient.SetActive (false);
 				ButtonStopNetwork.SetActive (true);
 
-				if (Cube != null)
-					Cube.SetActive (false);
+//				if (Cube != null)
+//					Cube.SetActive (false);
 
 				networking.StartServer (NetworkName.text, (connectedDevice) => {
 					if (connectedDeviceList == null)
@@ -168,18 +176,23 @@ public class NetworkTestScript : MonoBehaviour
 					{
 						connectedDeviceList.Add (connectedDevice);
 
-						if (Cube != null)
-						{
-							Cube.SetActive (true);
-							SendCubeRotation (Cube.transform.rotation, connectedDevice);
-						}
+//						if (Cube != null)
+//						{
+//							Cube.SetActive (true);
+						UserData.UserData userData = new UserData.UserData();
+						userData.id = "test";
+						userData.time = DateTime.Now;
+						userData.Lat = 200;
+						userData.Lon = -10;
+						SendUserDatas (new [] {userData}, connectedDevice);
+//						}
 					}
 				}, (disconnectedDevice) => {
 					if (connectedDeviceList != null && connectedDeviceList.Contains (disconnectedDevice))
 						connectedDeviceList.Remove (disconnectedDevice);
 				}, (dataDevice, characteristic, bytes) => {
 					deviceToSkip = dataDevice;
-					ParseCubePosition (bytes);
+					ParseUserData (bytes);
 				});
 			}
 			break;
@@ -198,15 +211,15 @@ public class NetworkTestScript : MonoBehaviour
 				ButtonStartClient.SetActive (false);
 				ButtonStopNetwork.SetActive (true);
 
-				if (Cube != null)
-					Cube.SetActive (false);
+//				if (Cube != null)
+//					Cube.SetActive (false);
 
 				networking.StartClient (NetworkName.text, ClientName.text, () => {
 					networking.StatusMessage = "Started advertising";
 				}, (clientName, characteristic, bytes) => {
-					if (Cube != null)
-						Cube.SetActive (true);
-					ParseCubePosition (bytes);
+//					if (Cube != null)
+//						Cube.SetActive (true);
+					ParseUserData (bytes);
 				});
 			}
 			break;
@@ -221,8 +234,8 @@ public class NetworkTestScript : MonoBehaviour
 					ButtonStartClient.SetActive (true);
 					ButtonStopNetwork.SetActive (false);
 
-					if (Cube != null)
-						Cube.SetActive (false);
+//					if (Cube != null)
+//						Cube.SetActive (false);
 				});
 			}
 			else
@@ -232,8 +245,8 @@ public class NetworkTestScript : MonoBehaviour
 					ButtonStartClient.SetActive (true);
 					ButtonStopNetwork.SetActive (false);
 
-					if (Cube != null)
-						Cube.SetActive (false);
+//					if (Cube != null)
+//						Cube.SetActive (false);
 				});
 			}
 			break;
@@ -246,8 +259,8 @@ public class NetworkTestScript : MonoBehaviour
 		ButtonStartServer.SetActive (true);
 		ButtonStartClient.SetActive (true);
 		ButtonStopNetwork.SetActive (false);
-		if (Cube != null)
-			Cube.SetActive (false);
+//		if (Cube != null)
+//			Cube.SetActive (false);
 
 		if (networking == null)
 		{
@@ -262,16 +275,16 @@ public class NetworkTestScript : MonoBehaviour
 			});
 		}
 
-		if (Cube != null)
-		{
-			var mouseDrageRotate = Cube.GetComponent<MouseDragRotate> ();
-			if (mouseDrageRotate != null)
-			{
-				mouseDrageRotate.OnMouseEvent = (rotation) => {
-					deviceToSkip = null;
-					SendCubeRotation (rotation);
-				};
-			}
-		}
+//		if (Cube != null)
+//		{
+//			var mouseDrageRotate = Cube.GetComponent<MouseDragRotate> ();
+//			if (mouseDrageRotate != null)
+//			{
+//				mouseDrageRotate.OnMouseEvent = (rotation) => {
+//					deviceToSkip = null;
+//					SendUserDatas (rotation);
+//				};
+//			}
+//		}
 	}
 }
