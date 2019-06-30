@@ -5,6 +5,8 @@ public class ConnectManager : MonoBehaviour
 {
     public HttpsManager HttpsManager;
     public OwnUserDataManager OwnUserDataManager;
+    public delegate void DataConnectHandler(UserData.UserData[] array);
+    public DataConnectHandler OnGet = _ => { };
     private string id;
     // Start is called before the first frame update
     void Start()
@@ -45,7 +47,8 @@ public class ConnectManager : MonoBehaviour
                     yield return null;
                     if (HttpsManager.State == HttpsManagerState.Success)
                     {
-                        yield return new WaitForSeconds(60f);
+                        OnGet(UserDataArrayParser.DeserializeJsonToUserDataArray(HttpsManager.GetText));
+                        yield return new WaitForSeconds(20f);
                         break;
                     }
                 }

@@ -11,10 +11,6 @@ public class HttpsManager:MonoBehaviour
 
     public string GetText = "";
 
-    private string UploadData;
-
-    
-
     public void OnCheck()
     {
         State = HttpsManagerState.Running;
@@ -42,12 +38,12 @@ public class HttpsManager:MonoBehaviour
     {
         GetText = "";
         State = HttpsManagerState.Running;
-        StartCoroutine(OnSend(url, UploadData));
+        StartCoroutine(OnSend(url));
     }
 
-    IEnumerator OnSend(string url,string data)
+    IEnumerator OnSend(string url)
     {
-        UnityWebRequest webRequest = UnityWebRequest.Post(url,data);
+        UnityWebRequest webRequest = UnityWebRequest.Get(url);
         yield return webRequest.SendWebRequest();
         if (webRequest.isNetworkError)
         {
