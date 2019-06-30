@@ -21,8 +21,8 @@ namespace Scripts
     {
         public LocationService locationService = new LocationService();
         public const float EquatorialRadius = 6378137; //赤道半径
-        public delegate void OnChangeLocationEventHandler(LocationPoint locationPoint);
-        public OnChangeLocationEventHandler OnChange = _ => {};
+        public delegate void OnChangeLocationEventHandler(LocationPoint locationPoint,double time);
+        public OnChangeLocationEventHandler OnChange;
 
         void Start()
         {
@@ -71,7 +71,7 @@ namespace Scripts
                         }
                         LocationPoint currentLocation = new LocationPoint(lat,lon);
                         
-                        OnChange(currentLocation);
+                        OnChange(currentLocation,locationInfo.timestamp);
                         locationService.Stop();
                         yield return new WaitForSeconds(60f);
                         locationService.Start();

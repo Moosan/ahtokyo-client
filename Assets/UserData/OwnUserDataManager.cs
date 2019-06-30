@@ -11,20 +11,24 @@ namespace UserData
 
         public Location Location;
 
+        private void Awake()
+        {
+            UserData = new UserData();
+        }
+
         private void Start()
         {
-            UserData = new UserData() {
-                id = "toriaezunoatai",
-                time = DateTime.Now,
-                Lat = 0.000000f,
-                Lon = 0.000000f
-            };
             Location.OnChange += OnUserLocationChange;
         }
-        private void OnUserLocationChange(LocationPoint locationPoint)
+        public void SetID(string id)
+        {
+            UserData.id = id;
+        }
+        private void OnUserLocationChange(LocationPoint locationPoint,double timeStamp)
         {
             UserData.Lat = locationPoint.latitude;
             UserData.Lon = locationPoint.longitude;
+            UserData.time = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(timeStamp).ToLocalTime();
             OnUpdate(UserData);
         }
     }

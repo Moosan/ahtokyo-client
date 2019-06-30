@@ -1,36 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using UserData;
-
-public class Merge : MonoBehaviour
+namespace UserData
 {
-    public TextAsset TextAsset;
-
-    // Start is called before the first frame update
-    void Start()
+    public static class Merge
     {
-        var dataArray = UserDataArrayParser.DeserializeJsonToUserDataArray(TextAsset.text);
-        var merged = MergeDataArray(dataArray);
-        Debug.Log(UserDataArrayParser.SerializeUserDataArrayToJson(merged));
-    }
-
-    public static UserData.UserData[] MergeDataArray(UserData.UserData[] dataArray)
-    {
-        Dictionary<string, UserData.UserData> DataDict = new Dictionary<string, UserData.UserData>();
-        foreach (var userData in dataArray)
+        public static UserData[] MergeDataArray(UserData[] dataArray)
         {
-            DataDict[userData.id] = userData;
-        }
-
-        foreach (var userData in dataArray)
-        {
-            if (DataDict[userData.id].time < userData.time)
+            Dictionary<string, UserData> DataDict = new Dictionary<string, UserData>();
+            foreach (var userData in dataArray)
             {
                 DataDict[userData.id] = userData;
             }
+
+            foreach (var userData in dataArray)
+            {
+                if (DataDict[userData.id].time < userData.time)
+                {
+                    DataDict[userData.id] = userData;
+                }
+            }
+            return DataDict.Values.ToArray();
         }
-        return DataDict.Values.ToArray();
     }
 }

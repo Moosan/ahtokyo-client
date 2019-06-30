@@ -14,10 +14,10 @@ namespace UserData
         {
             return new Dictionary<string, object>
             {
-                { "id", userData.id },
-                { "time", TimeUtil.TimeUtil.GetUnixTime(userData.time) },
-                { "Lat", userData.Lat?.ToString("F6") ?? "null"},
-                { "Lon", userData.Lon?.ToString("F6") ?? "null"}
+                { "ID", userData.id },
+                { "TIME", TimeUtil.TimeUtil.GetUnixTime(userData.time) },
+                { "LATITUDE", userData.Lat?.ToString("F6") ?? "null"},
+                { "LONGITUDE", userData.Lon?.ToString("F6") ?? "null"}
             };
         }
         public static UserData DeserializeJsonToUserData(string text)
@@ -26,11 +26,11 @@ namespace UserData
         }
         public static UserData DeserializeJsonToDictionary(Dictionary<string,object> dict)
         {
-            if (dict["Lat"] == null || dict["Lon"] == null)
+            if (dict["LATITUDE"] == null || dict["LONGITUDE"] == null)
             {
                 return new UserData() {
-                    id = (string)dict["id"],
-                    time = TimeUtil.TimeUtil.GetDateTime((long)dict["time"]),
+                    id = (string)dict["ID"],
+                    time = TimeUtil.TimeUtil.GetDateTime((long)dict["TIME"]),
                     Lat = null,
                     Lon = null
                 };
@@ -39,10 +39,10 @@ namespace UserData
             {
                 return new UserData()
                 {
-                    id = (string)dict["id"],
-                    time = TimeUtil.TimeUtil.GetDateTime((long)dict["time"]),
-                    Lat = System.Convert.ToSingle(dict["Lat"]),
-                    Lon = System.Convert.ToSingle(dict["Lon"])
+                    id = (string)dict["ID"],
+                    time = TimeUtil.TimeUtil.GetDateTime((long)dict["TIME"]),
+                    Lat = System.Convert.ToSingle(dict["LATITUDE"]),
+                    Lon = System.Convert.ToSingle(dict["LONGITUDE"])
                 };
             }
         }
@@ -60,7 +60,6 @@ namespace UserData
         }
         public static UserData[] DeserializeJsonToUserDataArray(string text)
         {
-            Debug.Log(text);
             var array = Json.Deserialize(text) as List<object>;
             var userDataArray = new UserData[array.Count];
             for(int i = 0; i < array.Count; i++)

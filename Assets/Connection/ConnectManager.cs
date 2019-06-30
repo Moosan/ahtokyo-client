@@ -4,38 +4,53 @@ using UserData;
 public class ConnectManager : MonoBehaviour
 {
     public HttpsManager HttpsManager;
-    
+    public OwnUserDataManager OwnUserDataManager;
+    private string id;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(CheckNetworkState());
+        StartCoroutine(NetworkingTransition());
     }
-
-    // Update is called once per frame
-    void Update()
+    IEnumerator NetworkingTransition()
     {
-        
-    }
-    IEnumerator CheckNetworkState()
-    {
-        // ネットワークの状態を確認する
-        if (Application.internetReachability != NetworkReachability.NotReachable)
+        id = PlayerPrefs.GetString("ID");
+        if(id == null)
         {
-            // ネットワークに接続されている状態
-            HttpsManager.OnConnect();
-            while (true)
+            if (Application.internetReachability != NetworkReachability.NotReachable)
             {
-                yield return null;
-                if (HttpsManager.State == HttpsManagerState.Success)
+                HttpsManager.OnCheck();
+                while (true)
                 {
-                    Debug.Log(UserDataArrayParser.DeserializeJsonToUserDataArray(HttpsManager.GetText));
-                    break;
+                    if(HttpsManager.State == HttpsManagerState.Success)
+                    {
+                        id = HttpsManager.GetText;
+                        PlayerPrefs.SetString("ID",id);
+                        PlayerPrefs.Save();
+                        break;
+                    }
                 }
             }
         }
-        else
+        OwnUserDataManager.SetID(id);
+        while (true)
         {
-            // ネットワークに接続されていない状態
+            // ネットワークの状態を確認する
+            if (Application.internetReachability != NetworkReachability.NotReachable)
+            {
+                // ネットワークに接続されている状態
+                HttpsManager.OnUpdate();
+
+                while (true)
+                {
+                    yield return null;
+                    if (HttpsManager.State == HttpsManagerState.Success)
+                    {
+                        yield return new WaitForSeconds(60f);
+                        break;
+                    }
+                }
+            }
         }
+
     }
 }
