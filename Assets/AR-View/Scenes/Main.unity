@@ -454,6 +454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OtherUserDatas: []
+  ConnectManager: {fileID: 2018815800}
 --- !u!114 &1079535425
 MonoBehaviour:
   m_ObjectHideFlags: 0
