@@ -54,7 +54,7 @@ namespace Scripts
             Vector3 angle = rot.eulerAngles;
             transform.eulerAngles = angle;
             _objposi = new Vector3(transform.forward.x, 0, transform.forward.z).normalized * distance + _camera.transform.position;
-            _objposi += Vector3.up * (int)Math.Sqrt(direction);
+            _objposi += Vector3.up * distance / 5;
             return _objposi;
         }
     }

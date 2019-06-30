@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/BLE/Example/NetworkTest.unity
     guid: b03b4f2d4d7404569b8603a6eead368c
+  - enabled: 1
+    path: Assets/AR-View/Scenes/ListScene.unity
+    guid: 2e4e865fc6c957745a9c8dfef7cce679
   m_configObjects: {}
